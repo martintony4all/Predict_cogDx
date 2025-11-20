@@ -4,6 +4,6 @@ second_imputation_onehot_encode.ipynb – Notebook for one-hot encoding and seco
 
 impute_data_processing.R – R script for preprocessing and imputation of missing data.
 
-files.zip – Compressed archive of data files for cogdx_final_script.ipynb.
+files.zip – Compressed archive of data files for running cogdx_AD_automl.ipynb script.
 
 README.md – Project documentation
