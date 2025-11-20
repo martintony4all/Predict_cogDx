@@ -1,4 +1,4 @@
-cogdx_final_script.ipynb – Final Jupyter Notebook containing the main pipeline for cognitive decline analysis.
+cogdx_AD_automl.ipynb – Final Jupyter Notebook containing the main pipeline for cognitive decline analysis.
 
 second_imputation_onehot_encode.ipynb – Notebook for one-hot encoding and secondary imputation steps.
 
