@@ -58,7 +58,7 @@ Testing on ROS_MAP2 (LABELED)
   Full_Model_With_DERs ROS_MAP2 TEST PERFORMANCE:
     Balanced Accuracy: 0.6294
     Accuracy: 0.7504
-  ✓ Predictions saved: test_predictions_Full_Model_With_DERs_ROS_MAP2_labeled.csv
+    Predictions saved: test_predictions_Full_Model_With_DERs_ROS_MAP2_labeled.csv
     Samples: 589, File: /cogdx_results_s/test_predictions_Full_Model_With_DERs_ROS_MAP2_labeled.csv
 
 ==================================================
@@ -67,14 +67,14 @@ Testing on ADNI_othern (LABELED)
   Full_Model_With_DERs ADNI_othern TEST PERFORMANCE:
     Balanced Accuracy: 0.7931
     Accuracy: 0.8238
-  ✓ Predictions saved: test_predictions_Full_Model_With_DERs_ADNI_othern_labeled.csv
+    Predictions saved: test_predictions_Full_Model_With_DERs_ADNI_othern_labeled.csv
     Samples: 1107, File: /cogdx_results_s/test_predictions_Full_Model_With_DERs_ADNI_othern_labeled.csv
 
 ==================================================
 Testing on Test_testn (LABELED)
 ==================================================
   Error during prediction/evaluation for Full_Model_With_DERs on Test_testn: Cannot convert non-finite values (NA or inf) to integer
-  ✓ Predictions saved: test_predictions_Full_Model_With_DERs_Test_testn_labeled.csv
+    Predictions saved: test_predictions_Full_Model_With_DERs_Test_testn_labeled.csv
     Samples: 26, File: /cogdx_results_s/test_predictions_Full_Model_With_DERs_Test_testn_labeled.csv
 
 
@@ -103,7 +103,7 @@ Testing on ROS_MAP2 (LABELED)
   Reduced_Model_No_DERs ROS_MAP2 TEST PERFORMANCE:
     Balanced Accuracy: 0.4769
     Accuracy: 0.6655
-  ✓ Predictions saved: test_predictions_Reduced_Model_No_DERs_ROS_MAP2_labeled.csv
+    Predictions saved: test_predictions_Reduced_Model_No_DERs_ROS_MAP2_labeled.csv
     Samples: 589, File: /cogdx_results_s/test_predictions_Reduced_Model_No_DERs_ROS_MAP2_labeled.csv
 
 ==================================================
@@ -112,14 +112,14 @@ Testing on ADNI_othern (LABELED)
   Reduced_Model_No_DERs ADNI_othern TEST PERFORMANCE:
     Balanced Accuracy: 0.7410
     Accuracy: 0.7769
-  ✓ Predictions saved: test_predictions_Reduced_Model_No_DERs_ADNI_othern_labeled.csv
+    Predictions saved: test_predictions_Reduced_Model_No_DERs_ADNI_othern_labeled.csv
     Samples: 1107, File: /cogdx_results_s/test_predictions_Reduced_Model_No_DERs_ADNI_othern_labeled.csv
 
 ==================================================
 Testing on Test_testn (LABELED)
 ==================================================
   Error during prediction/evaluation for Reduced_Model_No_DERs on Test_testn: Cannot convert non-finite values (NA or inf) to integer
-  ✓ Predictions saved: test_predictions_Reduced_Model_No_DERs_Test_testn_labeled.csv
+    Predictions saved: test_predictions_Reduced_Model_No_DERs_Test_testn_labeled.csv
     Samples: 26, File: /cogdx_results_s/test_predictions_Reduced_Model_No_DERs_Test_testn_labeled.csv
 
 
@@ -147,7 +147,7 @@ Testing on ROS_MAP2 (LABELED)
   Imputed_Model_MICE_DERs ROS_MAP2 TEST PERFORMANCE:
     Balanced Accuracy: 0.5562
     Accuracy: 0.7385
-  ✓ Predictions saved: test_predictions_Imputed_Model_MICE_DERs_ROS_MAP2_labeled.csv
+    Predictions saved: test_predictions_Imputed_Model_MICE_DERs_ROS_MAP2_labeled.csv
     Samples: 589, File: /cogdx_results_s/test_predictions_Imputed_Model_MICE_DERs_ROS_MAP2_labeled.csv
 
 ==================================================
@@ -156,14 +156,14 @@ Testing on ADNI_othern (LABELED)
   Imputed_Model_MICE_DERs ADNI_othern TEST PERFORMANCE:
     Balanced Accuracy: 0.7869
     Accuracy: 0.8157
-  ✓ Predictions saved: test_predictions_Imputed_Model_MICE_DERs_ADNI_othern_labeled.csv
+    Predictions saved: test_predictions_Imputed_Model_MICE_DERs_ADNI_othern_labeled.csv
     Samples: 1107, File: /cogdx_results_s/test_predictions_Imputed_Model_MICE_DERs_ADNI_othern_labeled.csv
 
 ==================================================
 Testing on Test_testn (LABELED)
 ==================================================
   Error during prediction/evaluation for Imputed_Model_MICE_DERs on Test_testn: Cannot convert non-finite values (NA or inf) to integer
-  ✓ Predictions saved: test_predictions_Imputed_Model_MICE_DERs_Test_testn_labeled.csv
+    Predictions saved: test_predictions_Imputed_Model_MICE_DERs_Test_testn_labeled.csv
     Samples: 26, File: /cogdx_results_s/test_predictions_Imputed_Model_MICE_DERs_Test_testn_labeled.csv
 
 ================================================================================================
