@@ -1,0 +1,390 @@
+COMPREHENSIVE FINAL REPORT - THREE MODELS
+============================================================
+
+MODEL CONFIGURATION
+-------------------------
+Algorithms used:
+  - GBM
+  - CAT
+  - XGB
+  - RF
+  - XT
+  - KNN
+  - NN_TORCH
+  - LR
+  - FASTAI
+  - REALTABPFN-V2
+  - ENS_WEIGHTED
+
+Features per model: 60-81
+Domain adaptation: 50% of each labeled cohort blended (adapt split)
+Evaluation: remaining 50% — no overlap with adapt samples
+Domain alignment: QuantileTransformer + StandardScaler
+Domain invariant representations: PCA (min(50, n_features))
+Age is FORCE INCLUDED in final features
+Transformers saved: Yes (standard_scaler.pkl, pca_model.pkl, mice_imputer.pkl)
+
+THREE MODELS TRAINED:
+  1. Full Model: Trained with all DER features present
+  2. Reduced Model: Trained without DER features (baseline)
+  3. Imputed Model: MICE imputation of DER features during training
+MICE Imputation: Trained on masked data only (no leakage)
+DER Masking Fraction: 100.0% (100% = realistic deployment)
+
+TEST DATASET SUMMARY
+-------------------------
+ROS_MAP2: 589 samples (LABELED)
+  ~296 used for domain adaptation, ~293 held out for evaluation
+ADNI_othern: 1107 samples (LABELED)
+  ~554 used for domain adaptation, ~553 held out for evaluation
+Test_testn (UCI & Anderson): 26 samples 
+  ~ All (26) used for adatation
+
+FEATURE SELECTION SUMMARY
+------------------------------
+Full Model Features: 126
+Reduced Model Features: 122
+Imputed Model Features: 126
+
+==================================================
+Imputed_Model_MICE_DERs
+==================================================
+Selected 76 features by MI | Top 15: ['Age', 'PMI.h.', 'KCNH8', 'last_MMSE_30', 'ST18', 'Braak_2', 'last_MMSE_26', 'Years_Education_20', 'last_MMSE_29', 'last_MMSE_21', 'ZEB2', 'last_MMSE_24', 'Years_Education_12', 'APOE_Status_44', 'Highest_Education_Level_Trade School/ Tech School']
+  Stable: 35/76
+  Stable: 43/76
+Stable in ≥2 datasets: 29
+
+==================================================
+Reduced_Model_No_DERs
+==================================================
+Selected 72 features by MI | Top 15: ['Age', 'PMI.h.', 'last_MMSE_29', 'last_MMSE_26', 'last_MMSE_21', 'Gender_female', 'Highest_Education_Level_Professional', 'race_Asian', 'last_MMSE_30', 'last_MMSE_2', 'last_MMSE_0', 'Years_Education_24', 'Years_Education_15', 'last_MMSE_8', 'last_MMSE_28']
+  Stable: 31/72
+  Stable: 39/72
+Stable in ≥2 datasets: 25
+
+==================================================
+Full_Model_With_DERs
+==================================================
+Selected 76 features by MI | Top 15: ['Age', 'PMI.h.', 'KCNH8', 'last_MMSE_30', 'ST18', 'Braak_2', 'last_MMSE_26', 'Years_Education_20', 'last_MMSE_29', 'last_MMSE_21', 'ZEB2', 'last_MMSE_24', 'Years_Education_12', 'APOE_Status_44', 'Highest_Education_Level_Trade School/ Tech School']
+  Stable: 35/76
+  Stable: 43/76
+Stable in ≥2 datasets: 29
+
+
+
+  ============================================================
+  CV SUMMARY — Full_Model_With_DERs
+  ============================================================
+  BalAcc (all):   0.9067 ± 0.1064
+  BalAcc (known): 0.9656 ± 0.0662
+  Accuracy:       0.9491 ± 0.0918
+  Per-class F1:
+    Class 1: 0.936 ± 0.117
+    Class 2: 0.960 ± 0.079
+    Class 3: 0.000 ± 0.000
+    Class 4: 0.935 ± 0.129
+    Class 5: 0.580 ± 0.503
+    Class 6: 1.000 ± 0.000
+
+
+  ============================================================
+  CV SUMMARY — Imputed_Model_MICE_DERs
+  ============================================================
+  BalAcc (all):   0.9012 ± 0.1049
+  BalAcc (known): 0.9594 ± 0.0617
+  Accuracy:       0.9445 ± 0.0812
+  Per-class F1:
+    Class 1: 0.938 ± 0.106
+    Class 2: 0.955 ± 0.070
+    Class 3: 0.000 ± 0.000
+    Class 4: 0.932 ± 0.091
+    Class 5: 0.600 ± 0.516
+    Class 6: 0.967 ± 0.105
+
+
+  ============================================================
+  CV SUMMARY — Reduced_Model_No_DERs
+  ============================================================
+  BalAcc (all):   0.8872 ± 0.1179
+  BalAcc (known): 0.9454 ± 0.0922
+  Accuracy:       0.9536 ± 0.0763
+  Per-class F1:
+    Class 1: 0.958 ± 0.096
+    Class 2: 0.965 ± 0.065
+    Class 3: 0.000 ± 0.000
+    Class 4: 0.926 ± 0.109
+    Class 5: 0.500 ± 0.527
+    Class 6: 0.967 ± 0.105
+
+
+
+RESULTS SUMMARY (LABELED DATASETS — held-out 50%)
+----------------------------------------
+
+ROS_MAP2:
+  Full Model:     Val=0.9404, Test=0.3366
+  Reduced Model:  Val=0.9264, Test=0.3269
+  Imputed Model:  Val=40.9247, Test=0.3298
+  
+
+ADNI_othern:
+  Full Model:     Val=0.9404, Test=0.6841
+  Reduced Model:  Val=0.9264, Test=0.6508
+  Imputed Model:  Val=0.9247, Test=0.6640
+  
+
+==================================================
+DERs Recovery Rate
+==================================================
+
+Dataset	Full Model BalAcc	Reduced Model BalAcc	Imputed Model BalAcc	Performance Loss (Full − Reduced)	Imputed − Reduced	Recovery Rate
+ROSMAP	0.336569		0.326915		0.329875		0.009654				0.002960		30.66%
+ADNI	0.684079		0.650791		0.664041		0.033288				0.013250		39.81%
+
+
+Dataset	Full Acc	Reduced Acc	Imputed Acc	Loss		Δ	Recovery Rate
+ROSMAP	0.641638	0.607509	0.631399	0.034129	0.023890	70.00%
+ADNI	0.732369	0.694394	0.712477	0.037975	0.018083	47.62%
+Average											58.81%
+
+
+
+
+
+TRANSFORMER FILES
+--------------------
+Each model directory now contains a 'transformers' subdirectory with:
+  - standard_scaler.pkl: StandardScaler for numeric features
+  - pca_model.pkl: PCA object (if USE_DOMAIN_INVARIANT_REPRESENTATION=True)
+  - mice_imputer.pkl: MICE imputer (Imputed Model only)
+  - numeric_features.pkl: List of numeric feature names
+  - selected_features.pkl: List of all selected features
+  - use_der_features.pkl: Flag indicating DER usage
+  - imputation_info.pkl: Metadata about imputation settings
+  - feature_info.pkl: Metadata about features
+
+DEPLOYMENT INSTRUCTIONS
+-------------------------
+For production deployment on data WITHOUT DERs:
+  1. Use REDUCED MODEL: simplest, but lowest accuracy
+  2. Use IMPUTED MODEL: imputes DERs using MICE, better accuracy
+     - Load transformers: scaler, pca (if used), imputer
+     - Apply imputer FIRST to fill in missing DERs
+     - Then apply other transformers (scaler, pca)
+     - Finally run prediction
+  3. Use FULL MODEL: only if DERs are available
+
+
+
+================================================================================
+Full_Model_With_DERs
+================================================================================
+
+Full_Model_With_DERs VALIDATION: BalAcc=0.9404  Acc=0.9407
+
+Per-class (Validation):
+  Class 1: P=0.835 R=0.905 F1=0.869 N=95
+  Class 2: P=0.889 R=0.758 F1=0.818 N=95
+  Class 3: P=1.000 R=1.000 F1=1.000 N=96
+  Class 4: P=0.922 R=0.979 F1=0.949 N=96
+  Class 5: P=1.000 R=1.000 F1=1.000 N=96
+  Class 6: P=1.000 R=1.000 F1=1.000 N=95
+
+================================================================================
+EVAL PREDICTIONS — held-out 50% — Full_Model_With_DERs
+================================================================================
+
+--- ROS_MAP2 (LABELED) ---
+  Balanced Acc: 0.3366  Acc: 0.6416
+              precision    recall  f1-score   support
+
+           1       0.66      0.73      0.69        94
+           2       0.48      0.43      0.46        74
+           3       0.00      0.00      0.00         4
+           4       0.72      0.85      0.78       102
+           5       0.00      0.00      0.00        14
+           6       0.00      0.00      0.00         5
+
+    accuracy                           0.64       293
+   macro avg       0.31      0.34      0.32       293
+weighted avg       0.59      0.64      0.61       293
+
+ 
+--- ADNI_othern (LABELED) ---
+  Balanced Acc: 0.6841  Acc: 0.7324
+              precision    recall  f1-score   support
+
+           1       0.77      0.77      0.77       250
+           2       0.71      0.73      0.72       258
+           4       0.64      0.56      0.60        45
+
+    accuracy                           0.73       553
+   macro avg       0.71      0.68      0.69       553
+weighted avg       0.73      0.73      0.73       553
+
+ 
+================================================================================
+LEADERBOARD — Full_Model_With_DERs
+================================================================================
+                           model  score_val  ROS_MAP2_bal_acc  ROS_MAP2_acc  ADNI_othern_bal_acc  ADNI_othern_acc     fit_time  pred_time_val
+             WeightedEnsemble_L2   0.940387          0.336569      0.641638             0.684079         0.732369   634.984292       4.114983
+             WeightedEnsemble_L4   0.940387          0.340317      0.648464             0.677233         0.714286 11645.183711      12.214843
+LightGBMLightGBM_Weighted_BAG_L1   0.936879          0.341414      0.648464             0.684903         0.725136   150.954426       1.078627
+CatBoostCatBoost_Enhanced_BAG_L3   0.933388          0.342286      0.655290             0.688462         0.712477 13240.715462      12.234906
+CatBoostCatBoost_Enhanced_BAG_L2   0.933370          0.344203      0.655290             0.685767         0.717902 10085.690436       7.988761
+             WeightedEnsemble_L3   0.933370          0.344203      0.655290             0.685767         0.717902 10085.884856       7.990701
+CatBoostCatBoost_Weighted_BAG_L2   0.931615          0.334715      0.641638             0.679225         0.708861  7121.029812       7.635881
+  RandomForestRF_Weighted_BAG_L3   0.929898          0.338879      0.648464             0.688627         0.712477 11644.665786      12.207459
+LightGBMLightGBM_Enhanced_BAG_L1   0.929879          0.333220      0.638225             0.685685         0.717902   106.914366       1.883559
+  RandomForestRF_Enhanced_BAG_L2   0.929879          0.337446      0.645051             0.697092         0.725136  6462.242928       7.571279
+
+
+DER IMPORTANCE — Full_Model_With_DERs:
+feature  composite_score  composite_rank  MI_score  native_importance  perm_mean_avg  domain_stability
+   ST18         0.1747               7  0.0903           0.004715       0.006020          0.586988
+ ZNF536         0.1441              11  0.0424           0.005947      -0.001622          0.693429
+  KCNH8         0.1364              13  0.0983           0.007001      -0.013515          0.705763
+   ZEB2         0.1182              17  0.0491           0.007527      -0.004691          0.709359
+
+
+
+================================================================================
+Imputed_Model_MICE_DERs
+================================================================================
+
+Imputed_Model_MICE_DERs VALIDATION: BalAcc=0.9247  Acc=0.9250
+
+Per-class (Validation):
+  Class 1: P=0.800 R=0.926 F1=0.859 N=95
+  Class 2: P=0.838 R=0.705 F1=0.766 N=95
+  Class 3: P=1.000 R=1.000 F1=1.000 N=96
+  Class 4: P=0.917 R=0.917 F1=0.917 N=96
+  Class 5: P=1.000 R=1.000 F1=1.000 N=96
+  Class 6: P=1.000 R=1.000 F1=1.000 N=95
+
+================================================================================
+EVAL PREDICTIONS — held-out 50% — Imputed_Model_MICE_DERs
+================================================================================
+
+--- ROS_MAP2 (LABELED) ---
+  Balanced Acc: 0.3299  Acc: 0.6314
+              precision    recall  f1-score   support
+
+           1       0.62      0.69      0.66        94
+           2       0.48      0.41      0.44        74
+           3       0.00      0.00      0.00         4
+           4       0.74      0.88      0.81       102
+           5       0.00      0.00      0.00        14
+           6       0.00      0.00      0.00         5
+
+    accuracy                           0.63       293
+   macro avg       0.31      0.33      0.32       293
+weighted avg       0.58      0.63      0.60       293
+
+ 
+--- ADNI_othern (LABELED) ---
+  Balanced Acc: 0.6640  Acc: 0.7125
+              precision    recall  f1-score   support
+
+           1       0.73      0.80      0.76       250
+           2       0.71      0.66      0.68       258
+           4       0.62      0.53      0.57        45
+
+    accuracy                           0.71       553
+   macro avg       0.68      0.66      0.67       553
+weighted avg       0.71      0.71      0.71       553
+
+
+================================================================================
+LEADERBOARD — Imputed_Model_MICE_DERs
+================================================================================
+                           model  score_val  ROS_MAP2_bal_acc  ROS_MAP2_acc  ADNI_othern_bal_acc  ADNI_othern_acc     fit_time  pred_time_val
+             WeightedEnsemble_L4   0.924708          0.329875      0.631399             0.664041         0.712477  6381.007580       8.411877
+             WeightedEnsemble_L2   0.924671          0.315735      0.587031             0.654460         0.699819  4833.218035       2.327774
+             WeightedEnsemble_L3   0.919463          0.327622      0.627986             0.665333         0.714286  6468.688989       9.066696
+CatBoostCatBoost_Enhanced_BAG_L1   0.919408          0.309490      0.593857             0.645761         0.696203  4651.648129       0.812592
+LightGBMLightGBM_Weighted_BAG_L1   0.915899          0.336542      0.621160             0.640510         0.688969   141.978465       1.353708
+  RandomForestRF_Weighted_BAG_L2   0.914200          0.330014      0.631399             0.665292         0.714286  6374.434811       8.282508
+LightGBMLightGBM_Enhanced_BAG_L2   0.914200          0.319850      0.614334             0.660427         0.716094  6464.710082       8.984378
+LightGBMLightGBM_Weighted_BAG_L2   0.914200          0.310985      0.597270             0.656000         0.701627  6529.593502       9.008410
+  RandomForestRF_Weighted_BAG_L1   0.914181          0.295690      0.556314             0.618040         0.683544     3.041368       0.106227
+CatBoostCatBoost_Enhanced_BAG_L2   0.912445          0.327004      0.627986             0.668782         0.710669 10150.467608       8.479280
+
+
+
+DER IMPORTANCE — Full_Model_With_DERs:
+feature  composite_score  composite_rank  MI_score  native_importance  perm_mean_avg  domain_stability
+  KCNH8         0.155693               5  0.098295                    0.000000          0.705763
+   ST18         0.120259               8  0.090293                    0.000000          0.586988
+   ZEB2         0.087836              13  0.049056                    0.000000          0.709359
+ ZNF536         0.076812              16  0.042415                    0.000000          0.693429
+
+  
+ 
+
+
+
+================================================================================
+Reduced_Model_No_DERs
+================================================================================
+
+Reduced_Model_No_DERs VALIDATION: BalAcc=0.9264  Acc=0.9267
+
+Per-class (Validation):
+  Class 1: P=0.804 R=0.905 F1=0.851 N=95
+  Class 2: P=0.840 R=0.716 F1=0.773 N=95
+  Class 3: P=1.000 R=1.000 F1=1.000 N=96
+  Class 4: P=0.918 R=0.938 F1=0.928 N=96
+  Class 5: P=1.000 R=1.000 F1=1.000 N=96
+  Class 6: P=1.000 R=1.000 F1=1.000 N=95
+
+================================================================================
+EVAL PREDICTIONS — held-out 50% — Reduced_Model_No_DERs
+================================================================================
+
+--- ROS_MAP2 (LABELED) ---
+  Balanced Acc: 0.3269  Acc: 0.6075
+              precision    recall  f1-score   support
+
+           1       0.64      0.65      0.64        94
+           2       0.41      0.38      0.39        74
+           3       0.00      0.00      0.00         4
+           4       0.74      0.86      0.80       102
+           5       0.33      0.07      0.12        14
+           6       0.00      0.00      0.00         5
+
+    accuracy                           0.61       293
+   macro avg       0.35      0.33      0.33       293
+weighted avg       0.58      0.61      0.59       293
+
+  
+--- ADNI_othern (LABELED) ---
+  Balanced Acc: 0.6508  Acc: 0.6944
+              precision    recall  f1-score   support
+
+           1       0.73      0.76      0.75       250
+           2       0.68      0.66      0.67       258
+           3       0.00      0.00      0.00         0
+           4       0.55      0.53      0.54        45
+           5       0.00      0.00      0.00         0
+
+    accuracy                           0.69       553
+   macro avg       0.65      0.65      0.65       553
+weighted avg       0.70      0.69      0.69       553
+
+  
+================================================================================
+LEADERBOARD — Reduced_Model_No_DERs
+================================================================================
+                           model  score_val  ROS_MAP2_bal_acc  ROS_MAP2_acc  ADNI_othern_bal_acc  ADNI_othern_acc     fit_time  pred_time_val
+             WeightedEnsemble_L2   0.926425          0.326915      0.607509             0.650791         0.694394  1037.511900       1.800417
+             WeightedEnsemble_L3   0.921217          0.333224      0.634812             0.661761         0.717902  6547.110390       8.314671
+             WeightedEnsemble_L4   0.921217          0.333224      0.634812             0.663094         0.719711 11712.705979      12.870132
+LightGBMLightGBM_Enhanced_BAG_L2   0.919463          0.333224      0.634812             0.664386         0.721519  6474.737458       8.191256
+CatBoostCatBoost_Weighted_BAG_L2   0.917690          0.348057      0.645051             0.653499         0.698011  7124.876340       7.867480
+LightGBMLightGBM_Enhanced_BAG_L1   0.917690          0.327533      0.607509             0.668575         0.710669    97.634048       1.542222
+LightGBMLightGBM_Weighted_BAG_L1   0.915899          0.329589      0.607509             0.655407         0.692586   155.926881       1.526304
+  RandomForestRF_Weighted_BAG_L3   0.914200          0.332884      0.634812             0.657967         0.712477 11658.498329      12.834145
+    ExtraTreesXT_Enhanced_BAG_L3   0.914200          0.334183      0.634812             0.661719         0.717902 11662.013315      12.868653
+  XGBoostXGBoost_Enhanced_BAG_L3   0.914200          0.337250      0.641638             0.652896         0.714286 11712.470691      12.868398
+
